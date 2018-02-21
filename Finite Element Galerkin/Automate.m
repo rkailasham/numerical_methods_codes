@@ -1,0 +1,28 @@
+%*******************************************************************%
+% This function calls the CalcError function repeatedly to          %
+% estimate the error for different solutions calculated with        % 
+% different number of elements. Takes in D,v and k as parameters    %
+% and returns the normalised error as the answer.                   %
+%                                                                   %
+%*******************************************************************%
+
+function [sol_diff] = Automate(D,v,k)
+
+tol = 1e-8;
+%calculating the finer grid of solutions
+[sol_fine] = FEMGsolve(1000,D,k,v,tol);
+a = FEMGsolve(10,D,k,v,tol);
+b = FEMGsolve(20,D,k,v,tol);
+c = FEMGsolve(25,D,k,v,tol);
+d = FEMGsolve(40,D,k,v,tol);
+e = FEMGsolve(50,D,k,v,tol);
+f = FEMGsolve(100,D,k,v,tol);
+
+sol_diff(1) = CalcError(sol_fine,a);
+sol_diff(2) = CalcError(sol_fine,b);
+sol_diff(3) = CalcError(sol_fine,c);
+sol_diff(4) = CalcError(sol_fine,d);   
+sol_diff(5) = CalcError(sol_fine,e);
+sol_diff(6) = CalcError(sol_fine,f);
+
+end
